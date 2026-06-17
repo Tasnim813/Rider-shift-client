@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ReveiwCard = ({reveiw}) => {
-    const {review,userName,delivery_email}=reveiw;
+    const {review,userName,delivery_email,user_photoURL}=reveiw;
     return (
         <div className="flex justify-center items-center min-h-[500px] bg-gray-100">
       <div className="w-[380px] bg-white rounded-3xl p-8 shadow-md">
@@ -21,7 +21,7 @@ const ReveiwCard = ({reveiw}) => {
 
         {/* User Info */}
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full bg-teal-800"></div>
+          <img src={user_photoURL} alt={userName} className="w-12 h-12 rounded-full" />
 
           <div>
             <h2 className="text-xl font-bold text-teal-900">

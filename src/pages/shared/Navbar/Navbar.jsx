@@ -5,6 +5,7 @@ import { NavLink } from 'react-router';
 const Navbar = () => {
   const links=<>
   <li><NavLink>Services</NavLink></li>
+  <li><NavLink to="/coverage">Coverage</NavLink></li>
   </>
     return (
         <div>
@@ -20,7 +21,7 @@ const Navbar = () => {
         {links}
       </ul>
     </div>
-    <a className="btn btn-ghost text-xl"><Logo></Logo></a>
+    <NavLink to="/"  className="btn btn-ghost text-xl"><Logo></Logo></NavLink>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
