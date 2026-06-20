@@ -1,8 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Logo from '../../../Component/Logo/Logo';
-import { NavLink } from 'react-router';
+import { Link, NavLink } from 'react-router';
+import useAuth from '../../../hook/useAuth';
+import { toast } from 'react-toastify';
 
 const Navbar = () => {
+  const {user,LogOut}=useAuth()
+  
+  const handleLogOut=()=>{
+    LogOut()
+    .then(result=>{
+      console.log(result)
+      toast.success("Successfully Logout")
+    })
+
+  }
   const links=<>
   <li><NavLink>Services</NavLink></li>
   <li><NavLink to="/coverage">Coverage</NavLink></li>
@@ -30,7 +42,15 @@ const Navbar = () => {
     </ul>
   </div>
   <div className="navbar-end">
-    <NavLink to="/login" className="btn btn-primary text-black" >Login</NavLink>
+    {
+      user? 
+      <Link onClick={handleLogOut} className="btn btn-primary text-black" >Logout</Link>
+     
+       : <NavLink to="/login" className="btn btn-primary text-black" >Login</NavLink>
+      
+    }
+    
+    
   </div>
 </div>
         </div>
