@@ -18,6 +18,7 @@ const Navbar = () => {
   const links=<>
   <li><NavLink>Services</NavLink></li>
   <li><NavLink to="/coverage">Coverage</NavLink></li>
+  <li><NavLink to="/sendParcel">SendParcel</NavLink></li>
   </>
     return (
         <div>
@@ -49,6 +50,7 @@ const Navbar = () => {
        : <NavLink to="/login" className="btn btn-primary text-black" >Login</NavLink>
       
     }
+    <Link to="/beARider" className='btn mx-4 text-black' >Be a Rider</Link>
     
     
   </div>

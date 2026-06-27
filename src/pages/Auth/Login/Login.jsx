@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import useAuth from '../../../hook/useAuth';
 import { toast } from 'react-toastify';
 import { type } from 'firebase/firestore/pipelines';
@@ -9,10 +9,14 @@ import GoogleLogin from '../GoogleLogin/GoogleLogin';
 const Login = () => {
     const {register,handleSubmit,formState:{errors}}=useForm()
     const {signInUser}=useAuth()
+    const location=useLocation()
+    const navigate=useNavigate()
+    
     const handleLogin=(data)=>{
         signInUser(data.email,data.password)
         .then(result=>{
             console.log(result)
+            navigate(location?.state || '/')
             toast.success("Login Successfully")
         }).catch(error=>{
             console.log(error)
@@ -21,6 +25,8 @@ const Login = () => {
 
 
     }
+
+
 
 
    
@@ -50,9 +56,12 @@ const Login = () => {
           {
             errors.password?.type==='minLength' && <p className='text-red-500'>Password must be 6 character</p>
           }
+
          
 
-      <p>Don’t have any account? <Link to="/register" className='text-green-500'>Register</Link></p> 
+      <p>Don’t have any account? <Link state={location.state} to="/register" className='text-green-500'>Register</Link></p>
+      
+         
          
           <button className="btn btn-neutral mt-4">Login</button>
         </fieldset>
