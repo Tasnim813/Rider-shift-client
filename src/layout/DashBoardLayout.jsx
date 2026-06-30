@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, NavLink, Outlet } from 'react-router';
-
+import { IoBagHandleOutline } from "react-icons/io5";
 const DashBoardLayout = () => {
     return (
         <div className="drawer lg:drawer-open">
@@ -38,8 +38,13 @@ const DashBoardLayout = () => {
         </li>
 
         {/* our dashboard Link */}
-        <li><NavLink to="/dashboard/my-parcels">MyParcels</NavLink></li>
-
+        <li><NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="MyParcels" to="/dashboard/my-parcels">
+        <IoBagHandleOutline/>
+        <span className="is-drawer-close:hidden">MyParcels</span>
+</NavLink>
+        
+        </li>
+        
         {/* List item */}
         <li>
           <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Settings">
