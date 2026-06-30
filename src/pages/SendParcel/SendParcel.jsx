@@ -2,8 +2,12 @@ import React from 'react';
 import { useForm} from "react-hook-form"
 import Swal from "sweetalert2";
 import { useLoaderData } from 'react-router';
+import useAxiosSecure from '../../hook/useAxiosSecure';
+import useAuth from '../../hook/useAuth';
 const SendParcel = () => {
-    const {register,watch,formState: { errors },handleSubmit}= useForm()
+    const {register,watch,handleSubmit}= useForm()
+    const axiosSecure=useAxiosSecure()
+    const {user}= useAuth()
     const serviceCenters=useLoaderData()
     const regionsDuplicate= serviceCenters.map(c=>c.region)
     const regions= [...new Set (regionsDuplicate)]
@@ -49,13 +53,19 @@ const SendParcel = () => {
   cancelButtonColor: "#d33",
   confirmButtonText: "I agree"
 }).then((result) => {
-  if (result.isConfirmed)
+  if (result.isConfirmed){
+    axiosSecure.post('/parcels',data)
+    .then(res=>{
+      console.log("after saving parcel",res.data)
+    })
+    Swal.fire({
+    title: "Deleted!",
+    text: "Your file has been deleted.",
+    icon: "success"
+  });
+  }
      
-  //   Swal.fire({
-  //   title: "Deleted!",
-  //   text: "Your file has been deleted.",
-  //   icon: "success"
-  // });
+    
 });
     
 
@@ -95,12 +105,12 @@ const SendParcel = () => {
      <fieldset className="fieldset">
         <h2 className='text-2xl font-bold'>Sender Details</h2>
           <label className="label">Sender Name</label>
-          <input type="text" {...register("senderName")} className="input w-full" placeholder="Sender Name" />
+          <input type="text" {...register("senderName")}   defaultValue={user?.displayName}   className="input w-full" placeholder="Sender Name" />
          
         </fieldset>
      <fieldset className="fieldset">
           <label className="label mt-4">Sender Email</label>
-          <input type="email" {...register("senderEmail")} className="input w-full" placeholder="Sender Email" />
+          <input type="email" {...register("senderEmail")}  defaultValue={user?.email} className="input w-full" placeholder="Sender Email" />
          
         </fieldset>
         {/* sender region */}

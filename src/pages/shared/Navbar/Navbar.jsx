@@ -19,7 +19,15 @@ const Navbar = () => {
   <li><NavLink>Services</NavLink></li>
   <li><NavLink to="/coverage">Coverage</NavLink></li>
   <li><NavLink to="/sendParcel">SendParcel</NavLink></li>
+  {
+    user && <>
+    <li><NavLink to="/dashboard/my-parcels">MyParcel</NavLink></li>
+    
+    </>
+  }
   </>
+
+  
     return (
         <div>
             <div className="navbar bg-base-100 shadow-sm">
