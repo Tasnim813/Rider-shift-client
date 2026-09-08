@@ -13,8 +13,9 @@ const Home = () => {
            
             <Banner></Banner>
             <Work></Work>
+             <ServiceCard></ServiceCard>
             <Brands></Brands>
-            <ServiceCard></ServiceCard>
+           
             <Reveiws reviewsPromise={reviewsPromise}></Reveiws>
         </div>
     );

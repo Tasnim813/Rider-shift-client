@@ -42,6 +42,8 @@ const Brands = () => {
         
    
       </Swiper>
+
+     
             </div>
        
     );
