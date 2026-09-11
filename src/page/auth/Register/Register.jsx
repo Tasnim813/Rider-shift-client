@@ -3,16 +3,39 @@ import { useForm } from 'react-hook-form';
 import useAuth from '../../../hook/useAuth';
 import { NavLink } from 'react-router';
 import GoogleLogin from '../../../Compnent/GoogleLogin/GoogleLogin';
-
+import axios from "axios";
 
 const Register = () => {
     const {register,handleSubmit ,formState:{errors}}=useForm()
-   const {registerUser}=useAuth()
+   const {registerUser,UpdateUserProfile}=useAuth()
     const handleRegister=(data)=>{
-        console.log(data)
+        console.log('after register', data.photo[0])
+        const profileImg=data.photo[0]
         registerUser(data.email,data.password)
         .then(result=>{
           console.log(result.user)
+          // store the img and get url
+          const formData=new FormData();
+          formData.append('image', profileImg)
+          const ImageAPIURL=`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_Image_URL}`
+          axios.post(ImageAPIURL,formData)
+          .then(res=>{
+            console.log("After Image Upload",res.data.data.url)
+            // update user profile
+            const userProfile={
+              displayName: data.name,
+              photoURL:res.data.data.url
+            }
+            UpdateUserProfile(userProfile)
+            .then(()=>{
+              console.log('USer Profile updated done')
+            })
+            .catch(error=>{
+              console.log(error)
+            })
+          })
+          
+          
         })
         .then(error=>{
           console.log(error)
@@ -27,6 +50,18 @@ const Register = () => {
                   <p className=' font-bold text-center mt-3'>Register with ZapShift</p>
       <div className="card-body">
         <form onSubmit={handleSubmit(handleRegister)}  className="fieldset">
+            {/* Name */}
+          <label className="label">Name</label>
+          <input type="text" {...register('name',{required:true})} className="input" placeholder="Name" />
+          {
+            errors.name?.type=== 'required' && <p className='text-red-500'>Name is required</p>
+          }
+            {/* photo*/}
+          <label className="label">Your Photo</label>
+          <input type="file" {...register('photo',{required:true})} className="file-input" placeholder="Your Photo" />
+          {
+            errors.photo?.type=== 'required' && <p className='text-red-500'>Photo is required</p>
+          }
             {/* email */}
           <label className="label">Email</label>
           <input type="email" {...register('email',{required:true})} className="input" placeholder="Email" />

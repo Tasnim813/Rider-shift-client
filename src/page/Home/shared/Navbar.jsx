@@ -44,7 +44,7 @@ const Navbar = () => {
    }
 
 
-    <Link to="/rider" className="btn bg-white text-black font-bold">Be a Rider</Link>
+    <Link to="/beRider" className="btn bg-white text-black font-bold">Be a Rider</Link>
   </div>
 </div>
         </div>
