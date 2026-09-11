@@ -1,16 +1,20 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../hook/useAuth';
-import { NavLink } from 'react-router';
+import { NavLink, useLocation, useNavigate } from 'react-router';
 import GoogleLogin from '../../../Compnent/GoogleLogin/GoogleLogin';
 
 const Login = () => {
   const {register,handleSubmit, formState:errors}=useForm()
   const {LoginUser}=useAuth()
+  const location =useLocation()
+  const navigate=useNavigate()
+
   const handleLogin=(data)=>{
     LoginUser(data.email,data.password)
     .then(result=>{
       console.log(result.user)
+      navigate(location?.state || '/')
     })
     .catch(error=>{
       console.log(error)
@@ -43,7 +47,7 @@ const Login = () => {
          
           <button className="btn btn-primary text-secondary font-bold mt-4">Login</button>
         </form>
-        <p>Don’t have any account? <NavLink to='/register' className='text-primary' >Register</NavLink> </p>
+        <p>Don’t have any account? <NavLink state={location.state} to='/register' className='text-primary' >Register</NavLink> </p>
          <div className='text-center  w-full'>
         <GoogleLogin></GoogleLogin>
       </div>

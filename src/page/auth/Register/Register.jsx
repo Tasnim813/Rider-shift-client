@@ -1,13 +1,16 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../hook/useAuth';
-import { NavLink } from 'react-router';
+import { NavLink, useLocation, useNavigate } from 'react-router';
 import GoogleLogin from '../../../Compnent/GoogleLogin/GoogleLogin';
 import axios from "axios";
 
 const Register = () => {
     const {register,handleSubmit ,formState:{errors}}=useForm()
    const {registerUser,UpdateUserProfile}=useAuth()
+   const location =useLocation()
+   const navigate=useNavigate()
+   console.log('In the location ',location)
     const handleRegister=(data)=>{
         console.log('after register', data.photo[0])
         const profileImg=data.photo[0]
@@ -29,6 +32,7 @@ const Register = () => {
             UpdateUserProfile(userProfile)
             .then(()=>{
               console.log('USer Profile updated done')
+              navigate(location?.state || '/')
             })
             .catch(error=>{
               console.log(error)
@@ -81,7 +85,7 @@ const Register = () => {
           <button className="btn btn-primary font-bold text-secondary mt-4">Register</button>
           
         </form>
-        <p>Already have an account? <NavLink to='/login' className="text-primary" >Login</NavLink> </p>
+        <p>Already have an account? <NavLink state={location.state} to='/login' className="text-primary" >Login</NavLink> </p>
         <div className='text-center  w-full'>
         <GoogleLogin></GoogleLogin>
       </div>
